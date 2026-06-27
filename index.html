@@ -3,9 +3,881 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SHFTRS</title>
+  <title>SHFTRS — Systems Mapping & Leverage Point Analysis</title>
+  <meta name="description" content="shftrs delivers AI-augmented systems mapping and leverage point analysis to practitioners working on complex societal challenges — identifying where well-placed interventions produce structural, lasting change.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    /* ============================
+       RESET & BASE
+    ============================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --paper:          #F6F1E9;
+      --ink:            #1A1A18;
+      --ink-mid:        #5C5855;
+      --ink-faint:      #9A9690;
+      --accent:         #B85C38;
+      --rule:           #D8D3CA;
+      --dark-bg:        #1A1A18;
+      --dark-text:      #F6F1E9;
+      --dark-mid:       rgba(246,241,233,0.6);
+      --dark-faint:     rgba(246,241,233,0.25);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--paper);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ============================
+       TYPOGRAPHY
+    ============================ */
+    h1, h2, h3 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      line-height: 1.12;
+      letter-spacing: -0.015em;
+    }
+
+    h1   { font-size: clamp(2.8rem, 5.5vw, 4.8rem); }
+    h2   { font-size: clamp(1.9rem, 3.5vw, 2.9rem); }
+    h3   { font-size: clamp(1.25rem, 2vw, 1.7rem); }
+
+    p { max-width: 66ch; }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ============================
+       LAYOUT
+    ============================ */
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 5%;
+    }
+
+    .label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 20px;
+    }
+
+    .label--accent { color: var(--accent); }
+
+    /* ============================
+       NAV
+    ============================ */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 5%;
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 0.88rem;
+      color: var(--ink-mid);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-cta {
+      background: var(--ink);
+      color: var(--paper) !important;
+      padding: 9px 20px;
+      font-weight: 500 !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--accent) !important; }
+
+    /* ============================
+       BUTTONS
+    ============================ */
+    .btn {
+      display: inline-block;
+      padding: 13px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--rule);
+    }
+
+    .btn-ghost:hover { border-color: var(--ink); }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn-accent:hover {
+      background: #9e4d2e;
+      border-color: #9e4d2e;
+    }
+
+    /* ============================
+       HERO
+    ============================ */
+    .hero {
+      padding: 120px 0 100px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .hero .label {
+      color: var(--accent);
+      margin-bottom: 32px;
+    }
+
+    .hero h1 {
+      margin-bottom: 28px;
+      max-width: 15ch;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--ink-mid);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--ink-mid);
+      max-width: 56ch;
+      margin-bottom: 48px;
+      line-height: 1.85;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* ============================
+       THE PROBLEM (dark)
+    ============================ */
+    .problem {
+      background: var(--dark-bg);
+      padding: 100px 0;
+    }
+
+    .problem .label { color: var(--accent); }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      margin-top: 56px;
+    }
+
+    .problem h2 { color: var(--dark-text); }
+
+    .problem-body p {
+      color: var(--dark-mid);
+      margin-bottom: 1.4em;
+    }
+
+    .problem-body p:last-child { margin-bottom: 0; }
+
+    .problem-body strong {
+      color: var(--dark-text);
+      font-weight: 400;
+    }
+
+    /* ============================
+       METHODOLOGY
+    ============================ */
+    .methodology {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .methodology h2 { margin-bottom: 16px; }
+
+    .methodology-intro {
+      font-size: 1.05rem;
+      color: var(--ink-mid);
+      max-width: 60ch;
+      margin-bottom: 64px;
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--rule);
+    }
+
+    .method-card {
+      padding: 52px 48px;
+    }
+
+    .method-card:first-child {
+      border-right: 1px solid var(--rule);
+    }
+
+    .method-num {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+
+    .method-card h3 { margin-bottom: 18px; }
+
+    .method-card p {
+      color: var(--ink-mid);
+      font-size: 0.96rem;
+    }
+
+    /* ============================
+       DELIVERABLES
+    ============================ */
+    .deliverables {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .deliverables h2 { margin-bottom: 14px; }
+
+    .deliverables-intro {
+      color: var(--ink-mid);
+      max-width: 58ch;
+      margin-bottom: 64px;
+    }
+
+    .deliverable-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .deliverable-item {
+      padding: 40px 0;
+      border-top: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 16px;
+    }
+
+    .deliverable-item:nth-child(odd) {
+      padding-right: 60px;
+      border-right: 1px solid var(--rule);
+    }
+
+    .deliverable-item:nth-child(even) {
+      padding-left: 60px;
+    }
+
+    .deliverable-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem;
+      color: var(--accent);
+      padding-top: 2px;
+    }
+
+    .deliverable-title {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .deliverable-item p {
+      font-size: 0.93rem;
+      color: var(--ink-mid);
+    }
+
+    /* ============================
+       ENGAGEMENT
+    ============================ */
+    .engagement {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .engagement h2 { margin-bottom: 14px; }
+
+    .engagement-intro {
+      color: var(--ink-mid);
+      max-width: 58ch;
+      margin-bottom: 64px;
+    }
+
+    .engagement-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .engagement-card {
+      padding: 48px;
+      border: 1px solid var(--rule);
+    }
+
+    .engagement-card.dark {
+      background: var(--dark-bg);
+      border-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
+
+    .engagement-type {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .engagement-card h3 { margin-bottom: 20px; }
+
+    .engagement-card.dark h3 { color: var(--dark-text); }
+
+    .engagement-price {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      margin-bottom: 4px;
+    }
+
+    .engagement-price-note {
+      font-size: 0.83rem;
+      color: var(--ink-faint);
+      margin-bottom: 32px;
+    }
+
+    .engagement-card.dark .engagement-price-note {
+      color: var(--dark-faint);
+    }
+
+    .engagement-card p {
+      font-size: 0.94rem;
+      color: var(--ink-mid);
+      margin-bottom: 1.3em;
+    }
+
+    .engagement-card.dark p {
+      color: var(--dark-mid);
+    }
+
+    .engagement-card .btn {
+      margin-top: 16px;
+    }
+
+    /* ============================
+       AUDIENCE
+    ============================ */
+    .audience {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .audience h2 { margin-bottom: 14px; }
+
+    .audience-intro {
+      color: var(--ink-mid);
+      max-width: 58ch;
+      margin-bottom: 64px;
+    }
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--rule);
+    }
+
+    .audience-item {
+      padding: 48px 40px 48px 0;
+      border-top: 3px solid var(--rule);
+      margin-top: -1px;
+    }
+
+    .audience-item:first-child { border-top-color: var(--accent); }
+
+    .audience-item:not(:last-child) {
+      padding-right: 48px;
+      border-right: 1px solid var(--rule);
+    }
+
+    .audience-item:not(:first-child) { padding-left: 48px; }
+
+    .audience-role {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 18px;
+    }
+
+    .audience-item h3 {
+      font-size: 1.25rem;
+      margin-bottom: 14px;
+    }
+
+    .audience-item p {
+      font-size: 0.93rem;
+      color: var(--ink-mid);
+    }
+
+    /* ============================
+       CONTACT (dark)
+    ============================ */
+    .contact {
+      background: var(--dark-bg);
+      padding: 100px 0;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: start;
+    }
+
+    .contact-left h2 {
+      color: var(--dark-text);
+      margin-bottom: 24px;
+    }
+
+    .contact-left p {
+      color: var(--dark-mid);
+      margin-bottom: 1.4em;
+    }
+
+    .contact-left p:last-child { margin-bottom: 0; }
+
+    .contact-note {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(246,241,233,0.1);
+      font-size: 0.82rem;
+      color: var(--dark-faint) !important;
+    }
+
+    /* Form */
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+      width: 100%;
+      background: rgba(246,241,233,0.05);
+      border: 1px solid rgba(246,241,233,0.12);
+      color: var(--dark-text);
+      padding: 13px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.94rem;
+      margin-bottom: 12px;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+      color: rgba(246,241,233,0.25);
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus,
+    .contact-form select:focus {
+      border-color: rgba(246,241,233,0.35);
+    }
+
+    .contact-form textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .contact-form select {
+      color: rgba(246,241,233,0.3);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(246,241,233,0.35)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+    }
+
+    .contact-form select option {
+      background: #1A1A18;
+      color: var(--dark-text);
+    }
+
+    .contact-form select.filled { color: var(--dark-text); }
+
+    .contact-form .btn-submit {
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border: 1px solid var(--accent);
+      padding: 14px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.94rem;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: all 0.2s;
+      letter-spacing: 0.02em;
+    }
+
+    .contact-form .btn-submit:hover {
+      background: #9e4d2e;
+      border-color: #9e4d2e;
+    }
+
+    /* ============================
+       FOOTER
+    ============================ */
+    footer {
+      background: var(--dark-bg);
+      border-top: 1px solid rgba(246,241,233,0.08);
+      padding: 36px 5%;
+    }
+
+    .footer-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--dark-text);
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--dark-faint);
+    }
+
+    /* ============================
+       RESPONSIVE
+    ============================ */
+    @media (max-width: 900px) {
+      section, .problem, .contact { padding: 72px 0; }
+      .hero { padding: 80px 0 72px; }
+
+      .problem-grid,
+      .method-grid,
+      .engagement-grid,
+      .contact-grid { grid-template-columns: 1fr; }
+
+      .method-card:first-child { border-right: none; border-bottom: 1px solid var(--rule); }
+
+      .deliverable-grid { grid-template-columns: 1fr; }
+      .deliverable-item:nth-child(odd) { padding-right: 0; border-right: none; }
+      .deliverable-item:nth-child(even) { padding-left: 0; }
+
+      .audience-grid { grid-template-columns: 1fr; }
+      .audience-item { padding: 40px 0 !important; border-right: none !important; border-top: 1px solid var(--rule) !important; }
+      .audience-item:first-child { border-top-color: var(--accent) !important; }
+
+      .contact-grid { gap: 56px; }
+      .nav-links { display: none; }
+    }
+  </style>
 </head>
 <body>
-  <p>Coming soon — SHFTRS</p>
+
+  <!-- ========================
+       NAV
+  ========================= -->
+  <nav>
+    <div class="nav-inner">
+      <span class="logo">SHFTRS</span>
+      <ul class="nav-links">
+        <li><a href="#methodology">Methodology</a></li>
+        <li><a href="#how-we-work">How we work</a></li>
+        <li><a href="#audience">Who it's for</a></li>
+        <li><a href="#contact" class="nav-cta">Get in touch</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ========================
+       HERO
+  ========================= -->
+  <section class="hero">
+    <div class="container">
+      <span class="label label--accent">Systems Mapping &amp; Leverage Point Analysis</span>
+      <h1>The problems keep coming back. <em>The system was never mapped.</em></h1>
+      <p class="hero-sub">shftrs delivers AI-augmented systems mapping and leverage point analysis to organisations working on complex societal challenges — identifying where well-placed interventions produce structural, lasting change.</p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-primary">Get in touch</a>
+        <a href="#methodology" class="btn btn-ghost">How the methodology works</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       THE PROBLEM
+  ========================= -->
+  <section class="problem" id="problem">
+    <div class="container">
+      <span class="label label--accent">The structural failure</span>
+      <div class="problem-grid">
+        <div>
+          <h2>Linear thinking built the tools. Complex problems exposed their limits.</h2>
+        </div>
+        <div class="problem-body">
+          <p>For decades, the impact economy has operated on a reductionist assumption: break the problem into parts, solve each part in isolation, measure the outputs. The results are familiar. <strong>Wins dissolve. Problems resurface in new forms.</strong> Well-funded interventions generate activity without structural change.</p>
+          <p>This is not a failure of effort or resources. It is a failure of epistemology. Complex systems are governed by interdependencies, feedback loops, and causal architectures that remain invisible to the tools most organisations use. Intervening without a map does not fail quietly — it generates unintended consequences and the rebound of dynamics that were never addressed at source.</p>
+          <p>shftrs maps the system. Then finds where to intervene.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       METHODOLOGY
+  ========================= -->
+  <section class="methodology" id="methodology">
+    <div class="container">
+      <span class="label">The methodology</span>
+      <h2>Two interconnected instruments. One coherent picture.</h2>
+      <p class="methodology-intro">Developed over five years of applied practice and academically published, the shftrs methodology synthesises the most rigorous elements of systems mapping and complexity analysis from leading global traditions.</p>
+
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="method-num">01 &mdash; CLD</div>
+          <h3>Causal Loop Diagram</h3>
+          <p>A visual representation of the system a client operates within — actors, variables, feedback loops, and causal relationships constituting the real architecture of the challenge. shftrs builds CLDs using exclusively client-provided data: your reports, field notes, interviews, and research. Not a generic AI model's approximation of your context. Your system, built from your evidence — grounded in data you can defend to funders and stakeholders.</p>
+        </div>
+        <div class="method-card">
+          <div class="method-num">02 &mdash; LPA</div>
+          <h3>Leverage Point Analysis</h3>
+          <p>Drawing on Donella Meadows' foundational theory — the places in a system where small interventions produce disproportionate, structural change — shftrs applies a suite of analytical lenses to identify where intervention produces lasting change rather than symptomatic relief. Six lenses are fully developed, with six to eight more in progress. Each reveals a different category of leverage. The combination is what produces the depth and defensibility that no single-lens analysis can achieve.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       DELIVERABLES
+  ========================= -->
+  <section class="deliverables" id="deliverables">
+    <div class="container">
+      <span class="label">What you receive</span>
+      <h2>A complete foundation for systemic intervention.</h2>
+      <p class="deliverables-intro">A shftrs engagement delivers interconnected outputs — not a report to file, but a working instrument for navigating what comes next.</p>
+
+      <div class="deliverable-grid">
+
+        <div class="deliverable-item">
+          <div class="deliverable-num">01</div>
+          <div>
+            <div class="deliverable-title">Validated Causal Loop Diagram</div>
+            <p>A visual map of the system — shared, communicable, and validated through participatory rounds that build stakeholder trust before implementation begins. A universal communication medium across your organisation and its partners.</p>
+          </div>
+        </div>
+
+        <div class="deliverable-item">
+          <div class="deliverable-num">02</div>
+          <div>
+            <div class="deliverable-title">Multi-Lens Leverage Point Analysis</div>
+            <p>A rigorous, multi-perspective analysis identifying where within the system interventions are most likely to produce structural, lasting change — rather than the symptomatic relief that drives the recurring pattern of illusory wins.</p>
+          </div>
+        </div>
+
+        <div class="deliverable-item">
+          <div class="deliverable-num">03</div>
+          <div>
+            <div class="deliverable-title">Prioritised Intervention Roadmap</div>
+            <p>Not just where to intervene, but how — specifying the form of intervention most suited to each leverage point: coalition-building, policy influence, new venture creation, scaling, or combinations. Sequence and priority built in.</p>
+          </div>
+        </div>
+
+        <div class="deliverable-item">
+          <div class="deliverable-num">04</div>
+          <div>
+            <div class="deliverable-title">Stakeholder Analysis</div>
+            <p>A mapping of who to work with, who to neutralise, and in what form — organised by intervention logic, not organisational chart. Built from the same system map, so the connections between actors and leverage points are explicit.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       HOW WE WORK
+  ========================= -->
+  <section class="engagement" id="how-we-work">
+    <div class="container">
+      <span class="label">How we work</span>
+      <h2>Two ways to engage.</h2>
+      <p class="engagement-intro">The right entry point depends on where you are — whether you need a full end-to-end engagement or want to experience the methodology before committing to a project.</p>
+
+      <div class="engagement-grid">
+        <div class="engagement-card dark">
+          <div class="engagement-type">Project engagement</div>
+          <h3>Full-service systems mapping</h3>
+          <div class="engagement-price">€10,000 – €50,000</div>
+          <div class="engagement-price-note">Fixed fee, scoped collaboratively to your project budget</div>
+          <p>End-to-end delivery: from scoping and data collection through CLD construction, multi-lens LPA, Stakeholder Analysis, and Intervention Roadmap — including participatory validation rounds that build the shared ownership essential for implementation.</p>
+          <p>Includes a formal data protection agreement and full IP ownership of all outputs. The right choice when you need results that are validated, defensible, and ready to present to funders and stakeholders.</p>
+          <a href="#contact" class="btn btn-accent">Start a conversation</a>
+        </div>
+        <div class="engagement-card">
+          <div class="engagement-type">Platform access</div>
+          <h3>Self-serve systems analysis</h3>
+          <div class="engagement-price">Pay per analysis</div>
+          <div class="engagement-price-note">Launching in beta — join the waitlist</div>
+          <p>Upload your materials and run analytical lenses on your system using the shftrs platform. Experience what the methodology reveals — the feedback loops, structural patterns, and leverage points most analyses never reach.</p>
+          <p>Designed to produce a specific arc: clarity about what is possible, and a precise sense of where the full methodology goes further. Join the waitlist to be notified at launch.</p>
+          <a href="#contact" class="btn btn-ghost">Join the beta waitlist</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       WHO IT'S FOR
+  ========================= -->
+  <section class="audience" id="audience">
+    <div class="container">
+      <span class="label">Who it's for</span>
+      <h2>Built for practitioners who sense the problem runs deeper.</h2>
+      <p class="audience-intro">shftrs speaks to a specific type of person — defined not by job title, but by a combination of frustration, intellectual honesty, and readiness for a different way of seeing.</p>
+
+      <div class="audience-grid">
+        <div class="audience-item">
+          <div class="audience-role">Primary audience</div>
+          <h3>The Awakening Practitioner</h3>
+          <p>Programme managers, project directors, and impact leads within nonprofits, NGOs, and INGOs who have watched wins dissolve and problems resurface — and who are looking for a framework that matches the complexity they encounter every day.</p>
+        </div>
+        <div class="audience-item">
+          <div class="audience-role">Funders &amp; investors</div>
+          <h3>The Mandated Insider</h3>
+          <p>Programme officers and portfolio managers within foundations, bilateral donors, and impact investment funds who need systems-level thinking made operationalisable — in RFPs, grantee requirements, or a portfolio theory of change that asks how investments reinforce each other toward structural change.</p>
+        </div>
+        <div class="audience-item">
+          <div class="audience-role">Platform audience</div>
+          <h3>The Tangible Seeker</h3>
+          <p>Practitioners, researchers, and social entrepreneurs who have encountered systems thinking and found it compelling but practically elusive. They are not looking for more theory. They are looking for something they can open and get something genuinely useful out of.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       CONTACT
+  ========================= -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+
+        <div class="contact-left">
+          <span class="label label--accent">Get in touch</span>
+          <h2>Ready to map the system?</h2>
+          <p>Whether you have a specific engagement in mind or want to understand what the methodology could reveal in your context, the right next step is a conversation.</p>
+          <p>shftrs engagements begin with a scoping session — a structured conversation to understand the system, the challenge, and what a well-designed analysis would need to address.</p>
+          <p class="contact-note">shftrs is based in the Netherlands and works with organisations globally. All client data remains under European data residency regardless of the LLM infrastructure used.</p>
+        </div>
+
+        <div>
+          <form class="contact-form" name="contact" netlify method="POST">
+            <input type="hidden" name="form-name" value="contact">
+            <input type="text" name="name" placeholder="Your name" required>
+            <input type="email" name="email" placeholder="Your email" required>
+            <input type="text" name="organisation" placeholder="Organisation">
+            <select name="enquiry-type" onchange="this.classList.add('filled')">
+              <option value="" disabled selected>What brings you here?</option>
+              <option value="project">I have a project in mind</option>
+              <option value="platform">I'm interested in the platform beta</option>
+              <option value="partnership">Partnership or co-delivery</option>
+              <option value="demo">I'd like to see a demo</option>
+              <option value="other">Something else</option>
+            </select>
+            <textarea name="message" placeholder="Tell us about the challenge you're navigating — even briefly."></textarea>
+            <button type="submit" class="btn-submit">Send &rarr;</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       FOOTER
+  ========================= -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">SHFTRS</span>
+      <span class="footer-copy">&copy; 2026 shftrs. All rights reserved.</span>
+    </div>
+  </footer>
+
 </body>
 </html>
