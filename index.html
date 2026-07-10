@@ -105,10 +105,14 @@
     }
 
     .logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.15rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      color: var(--ink);
+    }
+
+    .logo svg {
+      height: 22px;
+      width: auto;
     }
 
     .nav-links {
@@ -188,19 +192,22 @@
       border-bottom: 1px solid var(--rule);
     }
 
-    .hero .label {
-      color: var(--accent);
-      margin-bottom: 32px;
-    }
-
     .hero h1 {
       margin-bottom: 28px;
-      max-width: 15ch;
     }
 
-    .hero h1 em {
-      font-style: italic;
-      color: var(--ink-mid);
+    .hero-rotating {
+      display: grid;
+    }
+
+    .hero-phrase {
+      grid-area: 1/1;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .hero-phrase--active {
+      opacity: 1;
     }
 
     .hero-sub {
@@ -243,43 +250,65 @@
 
     .problem-body p:last-child { margin-bottom: 0; }
 
-    .problem-body strong {
-      color: var(--dark-text);
-      font-weight: 400;
+    .problem-quote {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+      color: var(--accent);
+      line-height: 1.3;
+      margin: 1.8em 0 !important;
+      max-width: 40ch;
     }
 
     /* ============================
-       METHODOLOGY
+       OUR APPROACH
     ============================ */
-    .methodology {
+    .our-approach {
       padding: 100px 0;
       border-bottom: 1px solid var(--rule);
     }
 
-    .methodology h2 { margin-bottom: 16px; }
+    .our-approach h2 { margin-bottom: 16px; }
 
-    .methodology-intro {
+    .approach-intro {
       font-size: 1.05rem;
       color: var(--ink-mid);
       max-width: 60ch;
       margin-bottom: 64px;
     }
 
-    .method-grid {
+    .approach-slides {
+      display: grid;
+    }
+
+    .approach-slide {
+      grid-area: 1/1;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      border: 1px solid var(--rule);
+      gap: 64px;
+      align-items: start;
+      opacity: 0;
+      transition: opacity 1s ease;
+      pointer-events: none;
     }
 
-    .method-card {
-      padding: 52px 48px;
+    .approach-slide--active {
+      opacity: 1;
+      pointer-events: auto;
     }
 
-    .method-card:first-child {
-      border-right: 1px solid var(--rule);
+    .approach-img-placeholder {
+      background: var(--rule);
+      aspect-ratio: 4 / 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
     }
 
-    .method-num {
+    .approach-num {
       font-size: 0.72rem;
       font-weight: 500;
       letter-spacing: 0.12em;
@@ -287,12 +316,52 @@
       margin-bottom: 28px;
     }
 
-    .method-card h3 { margin-bottom: 18px; }
+    .approach-copy h3 { margin-bottom: 18px; }
 
-    .method-card p {
+    .approach-copy p {
       color: var(--ink-mid);
       font-size: 0.96rem;
     }
+
+    .approach-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 36px;
+    }
+
+    .approach-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .approach-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--rule);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s;
+    }
+
+    .approach-dot--active { background: var(--ink); }
+
+    .approach-prev,
+    .approach-next {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: var(--ink-mid);
+      font-size: 1.1rem;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .approach-prev:hover,
+    .approach-next:hover { color: var(--ink); }
 
     /* ============================
        DELIVERABLES
@@ -351,6 +420,40 @@
     .deliverable-item p {
       font-size: 0.93rem;
       color: var(--ink-mid);
+    }
+
+    /* ============================
+       WHY IT'S DEFENSIBLE (dark)
+    ============================ */
+    .defensible {
+      background: var(--dark-bg);
+      padding: 100px 0;
+    }
+
+    .defensible h2 {
+      color: var(--dark-text);
+      margin-bottom: 64px;
+    }
+
+    .defensible-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 64px;
+      border-top: 1px solid rgba(246,241,233,0.1);
+      padding-top: 48px;
+    }
+
+    .defensible-item strong {
+      display: block;
+      color: var(--dark-text);
+      font-weight: 400;
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+
+    .defensible-item p {
+      color: var(--dark-mid);
+      font-size: 0.94rem;
     }
 
     /* ============================
@@ -430,62 +533,6 @@
     }
 
     /* ============================
-       AUDIENCE
-    ============================ */
-    .audience {
-      padding: 100px 0;
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .audience h2 { margin-bottom: 14px; }
-
-    .audience-intro {
-      color: var(--ink-mid);
-      max-width: 58ch;
-      margin-bottom: 64px;
-    }
-
-    .audience-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-top: 1px solid var(--rule);
-    }
-
-    .audience-item {
-      padding: 48px 40px 48px 0;
-      border-top: 3px solid var(--rule);
-      margin-top: -1px;
-    }
-
-    .audience-item:first-child { border-top-color: var(--accent); }
-
-    .audience-item:not(:last-child) {
-      padding-right: 48px;
-      border-right: 1px solid var(--rule);
-    }
-
-    .audience-item:not(:first-child) { padding-left: 48px; }
-
-    .audience-role {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 18px;
-    }
-
-    .audience-item h3 {
-      font-size: 1.25rem;
-      margin-bottom: 14px;
-    }
-
-    .audience-item p {
-      font-size: 0.93rem;
-      color: var(--ink-mid);
-    }
-
-    /* ============================
        CONTACT (dark)
     ============================ */
     .contact {
@@ -511,14 +558,6 @@
     }
 
     .contact-left p:last-child { margin-bottom: 0; }
-
-    .contact-note {
-      margin-top: 40px;
-      padding-top: 32px;
-      border-top: 1px solid rgba(246,241,233,0.1);
-      font-size: 0.82rem;
-      color: var(--dark-faint) !important;
-    }
 
     /* Form */
     .contact-form input,
@@ -625,26 +664,34 @@
        RESPONSIVE
     ============================ */
     @media (max-width: 900px) {
-      section, .problem, .contact { padding: 72px 0; }
+      section, .problem, .contact, .defensible { padding: 72px 0; }
       .hero { padding: 80px 0 72px; }
 
       .problem-grid,
-      .method-grid,
       .engagement-grid,
       .contact-grid { grid-template-columns: 1fr; }
 
-      .method-card:first-child { border-right: none; border-bottom: 1px solid var(--rule); }
+      .approach-slide {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
 
       .deliverable-grid { grid-template-columns: 1fr; }
       .deliverable-item:nth-child(odd) { padding-right: 0; border-right: none; }
       .deliverable-item:nth-child(even) { padding-left: 0; }
 
-      .audience-grid { grid-template-columns: 1fr; }
-      .audience-item { padding: 40px 0 !important; border-right: none !important; border-top: 1px solid var(--rule) !important; }
-      .audience-item:first-child { border-top-color: var(--accent) !important; }
+      .defensible-grid { grid-template-columns: 1fr; gap: 40px; }
 
       .contact-grid { gap: 56px; }
       .nav-links { display: none; }
+    }
+
+    /* ============================
+       REDUCED MOTION
+    ============================ */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-phrase { transition: none; }
+      .approach-slide { transition: none; }
     }
   </style>
 </head>
@@ -655,11 +702,13 @@
   ========================= -->
   <nav>
     <div class="nav-inner">
-      <span class="logo">SHFTRS</span>
+      <a href="/" class="logo" aria-label="shftrs — home">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-22.40 -167.60 556.80 219.60" role="img" aria-hidden="true"><path fill="currentColor" d="M87-27.60L87-27.60Q87-12.60 75.10-5.30Q63.20 2 44.20 2L44.20 2Q34.40 2 24.50-0.10Q14.60-2.20 5.60-6.80L5.60-6.80L9.20-32L29.20-29.80L29.20-18.60Q32.80-17.40 36.80-17.10Q40.80-16.80 42.80-16.80L42.80-16.80Q50.20-16.80 55.60-19.20Q61-21.60 61-26.40L61-26.40Q61-32.20 52.80-34Q44.60-35.80 33.80-37.60Q23-39.40 14.80-45Q6.60-50.60 6.60-64L6.60-64Q6.60-80.60 19.50-86.30Q32.40-92 46.20-92L46.20-92Q64.20-92 80-83.80L80-83.80L82.20-60.80L62.20-58.60L60.60-71.20Q54-73.40 46.40-73.40L46.40-73.40Q41.40-73.40 37.90-71.30Q34.40-69.20 34.40-64.80L34.40-64.80Q34.40-59 42.30-57.10Q50.20-55.20 60.70-53.40Q71.20-51.60 79.10-46.10Q87-40.60 87-27.60ZM200.40-19.40L200.40 0L150.60 0L150.60-19.40L162.60-19.40L162.60-50.80Q162.60-62.40 158.50-67.40Q154.40-72.40 146.80-72.40L146.80-72.40Q138-72.40 133.10-67Q128.20-61.60 127.80-52.80L127.80-52.80L127.80-19.40L139.80-19.40L139.80 0L90 0L90-19.40L102-19.40L102-118L90-118L90-137.60L127.80-137.60L127.80-76.40Q136.80-92 156.80-92L156.80-92Q169.60-92 179-84.40Q188.40-76.80 188.40-60.80L188.40-60.80L188.40-19.40L200.40-19.40ZM251.80-139.60L251.80-139.60Q258-139.60 265.40-137.80Q272.80-136 279-131.40L279-131.40L283-107L263-104.80L258.60-119Q254.40-120.20 251.40-120.20L251.40-120.20Q241.40-120.20 241.40-108.20L241.40-108.20L241.40-90.20L263.60-90.20L263.60-71.80L241.40-71.80L241.40-19.40L256.40-19.40L256.40 0L203.60 0L203.60-19.40L215.60-19.40L215.60-71.80L204.60-71.80L204.60-90.20L215.60-90.20L215.60-104Q215.60-118 224.80-128.80Q234-139.60 251.80-139.60ZM324-11.80L342.80-6Q340.80 9.60 332 16.80Q323.20 24 309.20 24L309.20 24Q294.20 24 284.90 16.50Q275.60 9 275.60-5L275.60-5L275.60-49.80L262.80-49.80L262.80-68.20L275.60-68.20L275.60-95.60L301.40-95.60L301.40-68.20L333.80-68.20L333.80-49.80L301.40-49.80L301.40-9.40Q301.40 2.40 312.20 2.40L312.20 2.40Q314.60 2.40 318.70 0.30Q322.80-1.80 324-11.80L324-11.80ZM399.00-69.40L399.00-69.40Q402.80-69.40 407.50-68.30Q412.20-67.20 416.80-64.40L416.80-64.40L420.80-32.80L401.20-30.60L397.80-46Q393.80-48.40 390.80-48.40L390.80-48.40Q386.40-48.40 383.10-45Q379.80-41.60 379.80-35L379.80-35L379.80 2.60L395.80 2.60L395.80 22L342.00 22L342.00 2.60L354.00 2.60L354.00-48.60L341.00-48.60L341.00-68.20L377.80-68.20L377.80-51Q380.00-58.80 384.90-64.10Q389.80-69.40 399.00-69.40ZM506.40-5.60L506.40-5.60Q506.40 9.40 494.50 16.70Q482.60 24 463.60 24L463.60 24Q453.80 24 443.90 21.90Q434.00 19.80 425.00 15.20L425.00 15.20L428.60-10L448.60-7.80L448.60 3.40Q452.20 4.60 456.20 4.90Q460.20 5.20 462.20 5.20L462.20 5.20Q469.60 5.20 475.00 2.80Q480.40 0.40 480.40-4.40L480.40-4.40Q480.40-10.20 472.20-12Q464.00-13.80 453.20-15.60Q442.40-17.40 434.20-23Q426.00-28.60 426.00-42L426.00-42Q426.00-58.60 438.90-64.30Q451.80-70 465.60-70L465.60-70Q483.60-70 499.40-61.80L499.40-61.80L501.60-38.80L481.60-36.60L480.00-49.20Q473.40-51.40 465.80-51.40L465.80-51.40Q460.80-51.40 457.30-49.30Q453.80-47.20 453.80-42.80L453.80-42.80Q453.80-37 461.70-35.10Q469.60-33.20 480.10-31.40Q490.60-29.60 498.50-24.10Q506.40-18.60 506.40-5.60Z"></path></svg>
+      </a>
       <ul class="nav-links">
-        <li><a href="#methodology">Methodology</a></li>
+        <li><a href="#our-approach">Our approach</a></li>
+        <li><a href="#deliverables">What you get</a></li>
         <li><a href="#how-we-work">How we work</a></li>
-        <li><a href="#audience">Who it's for</a></li>
         <li><a href="#contact" class="nav-cta">Get in touch</a></li>
       </ul>
     </div>
@@ -670,12 +719,18 @@
   ========================= -->
   <section class="hero">
     <div class="container">
-      <span class="label label--accent">Systems Mapping &amp; Leverage Point Analysis</span>
-      <h1>The problems keep coming back. <em>The system was never mapped.</em></h1>
-      <p class="hero-sub">shftrs delivers AI-augmented systems mapping and leverage point analysis to organisations working on complex societal challenges — identifying where well-placed interventions produce structural, lasting change.</p>
+      <h1>Know where to act —<br>
+        <span class="hero-rotating" aria-live="polite">
+          <span class="hero-phrase hero-phrase--active">so your program delivers</span>
+          <span class="hero-phrase">so your funding works</span>
+          <span class="hero-phrase">so your policy sticks</span>
+          <span class="hero-phrase">so your investment lands</span>
+        </span>
+      </h1>
+      <p class="hero-sub">We map the forces behind complex problems — using only your own evidence — and show you the places where interventions are most effective: the shftrs that move the system.</p>
       <div class="hero-cta">
         <a href="#contact" class="btn btn-primary">Get in touch</a>
-        <a href="#methodology" class="btn btn-ghost">How the methodology works</a>
+        <a href="#our-approach" class="btn btn-ghost">See how it works</a>
       </div>
     </div>
   </section>
@@ -685,50 +740,73 @@
   ========================= -->
   <section class="problem" id="problem">
     <div class="container">
-      <span class="label label--accent">The structural failure</span>
+      <span class="label label--accent">Why it keeps coming back</span>
       <div class="problem-grid">
         <div>
-          <h2>Linear thinking built the tools. Complex problems exposed their limits.</h2>
+          <h2>You keep tackling the problem. The system keeps rebuilding it.</h2>
         </div>
         <div class="problem-body">
-          <p>For decades, the impact economy has operated on a reductionist assumption: break the problem into parts, solve each part in isolation, measure the outputs. The results are familiar. <strong>Wins dissolve. Problems resurface in new forms.</strong> Well-funded interventions generate activity without structural change.</p>
-          <p>This is not a failure of effort or resources. It is a failure of epistemology. Complex systems are governed by interdependencies, feedback loops, and causal architectures that remain invisible to the tools most organisations use. Intervening without a map does not fail quietly — it generates unintended consequences and the rebound of dynamics that were never addressed at source.</p>
-          <p>shftrs maps the system. Then finds where to intervene.</p>
+          <p>For decades, the impact economy has operated on a reductionist assumption: break the problem into parts, solve each part in isolation, measure the outputs. The results are familiar: wins dissolve and problems resurface in new forms. Well-funded interventions generate activity without structural change.</p>
+          <p class="problem-quote">This is not a failure of effort or resources. It is a failure of approach.</p>
+          <p>Complex systems are governed by interdependencies, feedback loops, and causal architectures that remain invisible to the tools most organizations use. Intervening without a map generates unintended consequences and the recurrence of symptoms from dynamics that were never addressed at source.</p>
+          <p>shftrs maps these underlying causal relationships and finds where to intervene.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ========================
-       METHODOLOGY
+       OUR APPROACH
   ========================= -->
-  <section class="methodology" id="methodology">
+  <section class="our-approach" id="our-approach">
     <div class="container">
-      <span class="label">The methodology</span>
-      <h2>Two interconnected instruments. One coherent picture.</h2>
-      <p class="methodology-intro">Developed over five years of applied practice and academically published, the shftrs methodology synthesises the most rigorous elements of systems mapping and complexity analysis from leading global traditions.</p>
+      <span class="label">Our approach</span>
+      <h2>See the system. Find the leverage.</h2>
+      <p class="approach-intro">The academically published shftrs methodology synthesizes the most rigorous elements of systems mapping and complexity analysis from leading global traditions.</p>
 
-      <div class="method-grid">
-        <div class="method-card">
-          <div class="method-num">01 &mdash; CLD</div>
-          <h3>Causal Loop Diagram</h3>
-          <p>A visual representation of the system a client operates within — actors, variables, feedback loops, and causal relationships constituting the real architecture of the challenge. shftrs builds CLDs using exclusively client-provided data: your reports, field notes, interviews, and research. Not a generic AI model's approximation of your context. Your system, built from your evidence — grounded in data you can defend to funders and stakeholders.</p>
+      <div class="approach-slides">
+
+        <div class="approach-slide approach-slide--active">
+          <div class="approach-img">
+            <div class="approach-img-placeholder">Screenshot — CLD</div>
+          </div>
+          <div class="approach-copy">
+            <div class="approach-num">01 &mdash; CLD</div>
+            <h3>Causal Loop Diagram</h3>
+            <p>Not a generic LLM's approximation of your context, but your system — built from your evidence, grounded in data you can defend to stakeholders.</p>
+          </div>
         </div>
-        <div class="method-card">
-          <div class="method-num">02 &mdash; LPA</div>
-          <h3>Leverage Point Analysis</h3>
-          <p>Drawing on Donella Meadows' foundational theory — the places in a system where small interventions produce disproportionate, structural change — shftrs applies a suite of analytical lenses to identify where intervention produces lasting change rather than symptomatic relief. Six lenses are fully developed, with six to eight more in progress. Each reveals a different category of leverage. The combination is what produces the depth and defensibility that no single-lens analysis can achieve.</p>
+
+        <div class="approach-slide">
+          <div class="approach-img">
+            <div class="approach-img-placeholder">Screenshot — LPA</div>
+          </div>
+          <div class="approach-copy">
+            <div class="approach-num">02 &mdash; LPA</div>
+            <h3>Leverage Point Analysis</h3>
+            <p>&hellip;where interventions produce lasting change rather than symptomatic relief. Each lens reveals a different leverage perspective &mdash; system archetypes, performance gaps, power dynamics, system narratives, creative tensions, and more. The combination is what produces the depth and defensibility no single-lens analysis can reach.</p>
+          </div>
         </div>
+
+      </div>
+
+      <div class="approach-controls">
+        <button class="approach-prev" aria-label="Previous slide">&#8592;</button>
+        <div class="approach-dots">
+          <button class="approach-dot approach-dot--active" data-index="0" aria-label="Slide 1"></button>
+          <button class="approach-dot" data-index="1" aria-label="Slide 2"></button>
+        </div>
+        <button class="approach-next" aria-label="Next slide">&#8594;</button>
       </div>
     </div>
   </section>
 
   <!-- ========================
-       DELIVERABLES
+       WHAT YOU GET
   ========================= -->
   <section class="deliverables" id="deliverables">
     <div class="container">
-      <span class="label">What you receive</span>
+      <span class="label">What you get</span>
       <h2>A complete foundation for systemic intervention.</h2>
       <p class="deliverables-intro">A shftrs engagement delivers interconnected outputs — not a report to file, but a working instrument for navigating what comes next.</p>
 
@@ -771,19 +849,42 @@
   </section>
 
   <!-- ========================
+       WHY IT'S DEFENSIBLE
+  ========================= -->
+  <section class="defensible" id="defensible">
+    <div class="container">
+      <h2>Better decisions begin with better models.</h2>
+      <div class="defensible-grid">
+        <div class="defensible-item">
+          <strong>Your data — not a machine's.</strong>
+          <p>Every map is built only from the evidence you provide, never a language model's training data. Nothing is invented.</p>
+        </div>
+        <div class="defensible-item">
+          <strong>No hallucination, by design.</strong>
+          <p>Because the analysis reasons only over your sources, every insight traces back to something you can defend — to a board, a funder, or a minister.</p>
+        </div>
+        <div class="defensible-item">
+          <strong>It never leaves Europe.</strong>
+          <p>Your data is processed on European infrastructure and never transits to US or Chinese servers. Built for GDPR, not retrofitted to it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
        HOW WE WORK
   ========================= -->
   <section class="engagement" id="how-we-work">
     <div class="container">
       <span class="label">How we work</span>
       <h2>Two ways to engage.</h2>
-      <p class="engagement-intro">The right entry point depends on where you are — whether you need a full end-to-end engagement or want to experience the methodology before committing to a project.</p>
+      <p class="engagement-intro">It depends on where you are: do you need a full end-to-end engagement, or do you want to experience the methodology before committing to a project?</p>
 
       <div class="engagement-grid">
         <div class="engagement-card dark">
           <div class="engagement-type">Project engagement</div>
           <h3>Full-service systems mapping</h3>
-          <div class="engagement-price">€10,000 – €50,000</div>
+          <div class="engagement-price">from &euro;10,000</div>
           <div class="engagement-price-note">Fixed fee, scoped collaboratively to your project budget</div>
           <p>End-to-end delivery: from scoping and data collection through CLD construction, multi-lens LPA, Stakeholder Analysis, and Intervention Roadmap — including participatory validation rounds that build the shared ownership essential for implementation.</p>
           <p>Includes a formal data protection agreement and full IP ownership of all outputs. The right choice when you need results that are validated, defensible, and ready to present to funders and stakeholders.</p>
@@ -795,37 +896,8 @@
           <div class="engagement-price">Pay per analysis</div>
           <div class="engagement-price-note">Launching in beta — join the waitlist</div>
           <p>Upload your materials and run analytical lenses on your system using the shftrs platform. Experience what the methodology reveals — the feedback loops, structural patterns, and leverage points most analyses never reach.</p>
-          <p>Designed to produce a specific arc: clarity about what is possible, and a precise sense of where the full methodology goes further. Join the waitlist to be notified at launch.</p>
+          <p>Run a focused analysis yourself, on your own data, using a subset of the lenses. The fastest way to see the methodology work on a problem you know — and a natural on-ramp to a full engagement when you're ready to go deeper.</p>
           <a href="#contact" class="btn btn-ghost">Join the beta waitlist</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================
-       WHO IT'S FOR
-  ========================= -->
-  <section class="audience" id="audience">
-    <div class="container">
-      <span class="label">Who it's for</span>
-      <h2>Built for practitioners who sense the problem runs deeper.</h2>
-      <p class="audience-intro">shftrs speaks to a specific type of person — defined not by job title, but by a combination of frustration, intellectual honesty, and readiness for a different way of seeing.</p>
-
-      <div class="audience-grid">
-        <div class="audience-item">
-          <div class="audience-role">Primary audience</div>
-          <h3>The Awakening Practitioner</h3>
-          <p>Programme managers, project directors, and impact leads within nonprofits, NGOs, and INGOs who have watched wins dissolve and problems resurface — and who are looking for a framework that matches the complexity they encounter every day.</p>
-        </div>
-        <div class="audience-item">
-          <div class="audience-role">Funders &amp; investors</div>
-          <h3>The Mandated Insider</h3>
-          <p>Programme officers and portfolio managers within foundations, bilateral donors, and impact investment funds who need systems-level thinking made operationalisable — in RFPs, grantee requirements, or a portfolio theory of change that asks how investments reinforce each other toward structural change.</p>
-        </div>
-        <div class="audience-item">
-          <div class="audience-role">Platform audience</div>
-          <h3>The Tangible Seeker</h3>
-          <p>Practitioners, researchers, and social entrepreneurs who have encountered systems thinking and found it compelling but practically elusive. They are not looking for more theory. They are looking for something they can open and get something genuinely useful out of.</p>
         </div>
       </div>
     </div>
@@ -843,7 +915,6 @@
           <h2>Ready to map the system?</h2>
           <p>Whether you have a specific engagement in mind or want to understand what the methodology could reveal in your context, the right next step is a conversation.</p>
           <p>shftrs engagements begin with a scoping session — a structured conversation to understand the system, the challenge, and what a well-designed analysis would need to address.</p>
-          <p class="contact-note">shftrs is based in the Netherlands and works with organisations globally. All client data remains under European data residency regardless of the LLM infrastructure used.</p>
         </div>
 
         <div>
@@ -878,6 +949,55 @@
       <span class="footer-copy">&copy; 2026 shftrs. All rights reserved.</span>
     </div>
   </footer>
+
+  <script>
+    // Hero rotating phrases
+    (function () {
+      var phrases = document.querySelectorAll('.hero-phrase');
+      if (!phrases.length) return;
+      if (!window.matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
+      var i = 0;
+      setInterval(function () {
+        phrases[i].classList.remove('hero-phrase--active');
+        i = (i + 1) % phrases.length;
+        phrases[i].classList.add('hero-phrase--active');
+      }, 3500);
+    }());
+
+    // Approach slideshow
+    (function () {
+      var slides = document.querySelectorAll('.approach-slide');
+      var dots = document.querySelectorAll('.approach-dot');
+      var container = document.querySelector('.approach-slides');
+      if (!slides.length) return;
+      var current = 0;
+      var timer;
+      var DURATION = 5000;
+      var motionOk = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+
+      function goTo(n) {
+        slides[current].classList.remove('approach-slide--active');
+        dots[current].classList.remove('approach-dot--active');
+        current = (n + slides.length) % slides.length;
+        slides[current].classList.add('approach-slide--active');
+        dots[current].classList.add('approach-dot--active');
+      }
+
+      if (motionOk) {
+        timer = setInterval(function () { goTo(current + 1); }, DURATION);
+        container.addEventListener('mouseenter', function () { clearInterval(timer); });
+        container.addEventListener('mouseleave', function () {
+          timer = setInterval(function () { goTo(current + 1); }, DURATION);
+        });
+      }
+
+      document.querySelector('.approach-prev').addEventListener('click', function () { goTo(current - 1); });
+      document.querySelector('.approach-next').addEventListener('click', function () { goTo(current + 1); });
+      dots.forEach(function (dot, idx) {
+        dot.addEventListener('click', function () { goTo(idx); });
+      });
+    }());
+  </script>
 
 </body>
 </html>
