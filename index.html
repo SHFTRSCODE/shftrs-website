@@ -251,6 +251,14 @@
 
     .problem-body p:last-child { margin-bottom: 0; }
 
+    .problem-visual {
+      display: block;
+      width: 100%;
+      height: 560px;
+      border: none;
+      margin-top: 56px;
+    }
+
     .problem-quote {
       font-family: 'DM Serif Display', serif;
       font-size: clamp(1.2rem, 2.2vw, 1.6rem);
@@ -688,6 +696,8 @@
         gap: 32px;
       }
 
+      .problem-visual { height: 380px; }
+
       .deliverable-grid { grid-template-columns: 1fr; }
       .deliverable-item:nth-child(odd) { padding-right: 0; border-right: none; }
       .deliverable-item:nth-child(even) { padding-left: 0; }
@@ -764,6 +774,7 @@
           <p>shftrs maps these underlying causal relationships and finds where to intervene.</p>
         </div>
       </div>
+      <iframe class="problem-visual" src="system-visual.html" title="System dynamics visualisation" loading="lazy"></iframe>
     </div>
   </section>
 
