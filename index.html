@@ -909,7 +909,7 @@
           <div class="engagement-price-note">Launching in beta — join the waitlist</div>
           <p>Upload your materials and run analytical lenses on your system using the shftrs platform. Experience what the methodology reveals — the feedback loops, structural patterns, and leverage points most analyses never reach.</p>
           <p>Run a focused analysis yourself, on your own data, using a subset of the lenses. The fastest way to see the methodology work on a problem you know — and a natural on-ramp to a full engagement when you're ready to go deeper.</p>
-          <a href="#contact" class="btn btn-ghost">Join the beta waitlist</a>
+          <a href="#contact" class="btn btn-ghost" data-enquiry="platform">Join the beta waitlist</a>
         </div>
       </div>
     </div>
@@ -979,6 +979,16 @@
         phrases[i].classList.add('hero-phrase--active');
       }, 4500);
     }());
+
+    // Pre-populate enquiry select from CTA buttons
+    document.querySelectorAll('[data-enquiry]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var select = document.querySelector('select[name="enquiry-type"]');
+        if (!select) return;
+        select.value = btn.getAttribute('data-enquiry');
+        select.classList.add('filled');
+      });
+    });
 
     // Contact form — inline fetch submission
     (function () {
